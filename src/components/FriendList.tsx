@@ -7,7 +7,8 @@ interface Props {
   data: {
     id: number;
     name: string;
-    likes: number
+    likes: number;
+    online: string;
   }[];
   follow: () => void;
 }

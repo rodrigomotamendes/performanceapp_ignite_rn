@@ -10,6 +10,12 @@ import {
   ScrollView
 } from 'react-native';
 
+interface Data {
+  id: string;
+  name: string;
+  likes: number
+}
+
 export function Home(){
   const [name, setName] = useState('');
   const [friends, setFriends] = useState([])
@@ -17,7 +23,17 @@ export function Home(){
   async function handleSearch() {
     const response = await fetch(`http://192.168.0.3:3333/friends?q=${name}`);
     const data = await response.json();
-    setFriends(data);
+
+    const formattedData = data.map((item: Data) => {
+      return {
+        id: item.id,
+        name: item.name,
+        likes: item.likes,
+        online: `${new Date().getHours()}:${new Date().getMinutes()}`
+      }
+    })
+
+    setFriends(formattedData);
   }
 
   const handleFollow = useCallback(() => {
